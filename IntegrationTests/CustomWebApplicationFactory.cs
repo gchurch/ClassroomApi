@@ -41,16 +41,16 @@ namespace IntegrationTests
                     db.Database.EnsureCreated();
                     db.SaveChanges();
 
-                    /*
+                    
                     try
                     {
-                        Infrastructure.Data.SeedData.Initialize(scopedServices);
+                        SeedData.Initialize(scopedServices);
                     }
                     catch (Exception ex)
                     {
                         logger.LogError(ex, "An error occured seeding the DB.");
                     }
-                    */
+                    
                 }
             });
         }
