@@ -2,6 +2,7 @@
 
 [![.NET](https://github.com/gchurch/ClassroomApi/actions/workflows/dotnet.yml/badge.svg)](https://github.com/gchurch/ClassroomApi/actions/workflows/dotnet.yml)
 
+I didn't implement DTOs, so in swagger the examples contain the EF Core navigation properties. Please ignore the students property of Class and the class property of Student.
 
 ### Endpoint 1: Create a teacher
 
