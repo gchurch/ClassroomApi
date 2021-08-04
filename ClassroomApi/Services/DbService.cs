@@ -99,7 +99,7 @@ namespace ClassroomApi.Services
             student.StudentId = 0;
             if(DoesClassExist(student.ClassId) == false)
             {
-                throw new Exception();
+                throw new Exception("Trying to add a student to a class that doesn't exist");
             }
             _context.Students.Add(student);
             _context.SaveChanges();
