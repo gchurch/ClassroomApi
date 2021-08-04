@@ -51,7 +51,7 @@ namespace ClasssroomApi.Controllers
                 _dbService.AddStudent(student);
                 return CreatedAtAction(nameof(GetStudentById), new { StudentId = student.StudentId }, student);
             }
-            catch (DbUpdateException e)
+            catch (Exception e)
             {
                 return NoContent();
             }

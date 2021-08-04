@@ -74,19 +74,33 @@ namespace ClassroomApi.Services
             return students;
         }
 
-        public Student GetStudentById(int classId)
+        public Student GetStudentById(int studentId)
         {
             var query = from student
                         in _context.Students
-                        where student.StudentId == classId
+                        where student.StudentId == studentId
                         select student;
             Student selectedStudent = query.AsNoTracking().FirstOrDefault();
             return selectedStudent;
         }
 
+        private bool DoesClassExist(int classId)
+        {
+            var query = from @class
+                        in _context.Classes
+                        where @class.ClassId == classId
+                        select @class;
+            bool doesClassExist = query.Any();
+            return doesClassExist;
+        }
+
         public void AddStudent(Student student)
         {
             student.StudentId = 0;
+            if(DoesClassExist(student.ClassId) == false)
+            {
+                throw new Exception();
+            }
             _context.Students.Add(student);
             _context.SaveChanges();
         }

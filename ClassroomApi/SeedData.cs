@@ -27,6 +27,13 @@ namespace ClassroomApi
                 return;     // DB has been seeded
             }
 
+            AddTeachers(context);
+            AddClasses(context);
+            AddStudents(context);
+        }
+
+        private static void AddTeachers(ClassroomContext context)
+        {
             var teachers = new List<Teacher>()
             {
                 new Teacher()
@@ -53,6 +60,46 @@ namespace ClassroomApi
             };
 
             context.Teachers.AddRange(teachers);
+            context.SaveChanges();
+        }
+
+        private static void AddClasses(ClassroomContext context)
+        {
+            var classes = new List<Class>()
+            {
+                new Class()
+                {
+                    ClassName = "Maths",
+                    School = "Wilson's",
+                    Grade = "A"
+                }
+            };
+
+            context.Classes.AddRange(classes);
+            context.SaveChanges();
+        }
+
+        private static void AddStudents(ClassroomContext context)
+        {
+            var students = new List<Student>()
+            {
+                new Student()
+                {
+                    FirstName = "Harry",
+                    LastName = "Davidson",
+                    Age = 14,
+                    ClassId = 1
+                },
+                new Student()
+                {
+                    FirstName = "Kevin",
+                    LastName = "Mitchell",
+                    Age = 12,
+                    ClassId = 1
+                }
+            };
+
+            context.Students.AddRange(students);
             context.SaveChanges();
         }
     }
