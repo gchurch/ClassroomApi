@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ClassroomApi.Entities;
 using ClassroomApi.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClasssroomApi.Controllers
 {
@@ -44,8 +45,16 @@ namespace ClasssroomApi.Controllers
         [HttpPost]
         public ActionResult<Student> CreateStudent([FromBody] Student student)
         {
-            _dbService.AddStudent(student);
-            return CreatedAtAction(nameof(GetStudentById), new { StudentId = student.StudentId }, student);
+            //If the foreign key contraint of the Student entity isn't met then a DbUpdateException is thrown
+            try
+            {
+                _dbService.AddStudent(student);
+                return CreatedAtAction(nameof(GetStudentById), new { StudentId = student.StudentId }, student);
+            }
+            catch (DbUpdateException e)
+            {
+                return NoContent();
+            }
         }
     }
 }

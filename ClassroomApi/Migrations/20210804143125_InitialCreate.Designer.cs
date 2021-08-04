@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClassroomApi.Migrations
 {
     [DbContext(typeof(ClassroomContext))]
-    [Migration("20210804095443_InitialCreate")]
+    [Migration("20210804143125_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace ClassroomApi.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ClassroomApi.Models.Class", b =>
+            modelBuilder.Entity("ClassroomApi.Entities.Class", b =>
                 {
                     b.Property<int>("ClassId")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace ClassroomApi.Migrations
                     b.ToTable("Classes");
                 });
 
-            modelBuilder.Entity("ClassroomApi.Models.Student", b =>
+            modelBuilder.Entity("ClassroomApi.Entities.Student", b =>
                 {
                     b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
@@ -62,10 +62,12 @@ namespace ClassroomApi.Migrations
 
                     b.HasKey("StudentId");
 
+                    b.HasIndex("ClassId");
+
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("ClassroomApi.Models.Teacher", b =>
+            modelBuilder.Entity("ClassroomApi.Entities.Teacher", b =>
                 {
                     b.Property<int>("TeacherId")
                         .ValueGeneratedOnAdd()
@@ -89,7 +91,7 @@ namespace ClassroomApi.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("ClassroomApi.Models.TeacherClass", b =>
+            modelBuilder.Entity("ClassroomApi.Entities.TeacherClass", b =>
                 {
                     b.Property<int>("TeacherClassId")
                         .ValueGeneratedOnAdd()
@@ -105,6 +107,22 @@ namespace ClassroomApi.Migrations
                     b.HasKey("TeacherClassId");
 
                     b.ToTable("TeacherClasses");
+                });
+
+            modelBuilder.Entity("ClassroomApi.Entities.Student", b =>
+                {
+                    b.HasOne("ClassroomApi.Entities.Class", "Class")
+                        .WithMany("Students")
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+                });
+
+            modelBuilder.Entity("ClassroomApi.Entities.Class", b =>
+                {
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

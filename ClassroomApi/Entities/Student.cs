@@ -12,5 +12,6 @@ namespace ClassroomApi.Entities
         public string LastName { get; set; }
         public int Age { get; set; }
         public int ClassId { get; set; }
+        public Class Class { get; set; }
     }
 }
