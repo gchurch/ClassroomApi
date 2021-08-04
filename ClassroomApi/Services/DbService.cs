@@ -131,5 +131,34 @@ namespace ClassroomApi.Services
             List<string> classNames = query.AsNoTracking().ToList();
             return classNames;
         }
+
+        public int GetClassIdFromClassName(string className)
+        {
+            var query = from @class
+                        in _context.Classes
+                        where @class.ClassName == className
+                        select @class.ClassId;
+            int classId = query.FirstOrDefault();
+            return classId;
+        }
+
+        public List<string> GetStudentNamesFromClass(int classId)
+        {
+            if(DoesClassExist(classId) == false)
+            {
+                throw new Exception("Class doesn't exist");
+            }
+            var query = from @class
+                        in _context.Classes
+                        where @class.ClassId == classId
+                        select @class.Students;
+            List<Student> students = query.Single();
+            var studentNames = new List<string>();
+            foreach(Student student in students)
+            {
+                studentNames.Add($"{student.FirstName} {student.LastName}");
+            }
+            return studentNames;
+        }
     }
 }

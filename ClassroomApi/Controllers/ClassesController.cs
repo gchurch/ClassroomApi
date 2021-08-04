@@ -75,5 +75,22 @@ namespace ClassroomApi.Controllers
             List<string> classNames = _dbService.GetAllClassNames();
             return Ok(classNames);
         }
+
+        [HttpGet("{className}/StudentNames")]
+        public ActionResult<List<string>> GetStudentNamesInClass(string className)
+        {
+            try
+            {
+                int classId = _dbService.GetClassIdFromClassName(className);
+                List<string> studentNames = _dbService.GetStudentNamesFromClass(classId);
+                return Ok(studentNames);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return NotFound();
+            }
+
+        }
     }
 }
