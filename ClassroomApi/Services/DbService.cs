@@ -122,5 +122,14 @@ namespace ClassroomApi.Services
             }
             _context.TeacherClasses.Add(teacherClass);
         }
+
+        public List<string> GetAllClassNames()
+        {
+            var query = from @class
+                        in _context.Classes
+                        select @class.ClassName;
+            List<string> classNames = query.AsNoTracking().ToList();
+            return classNames;
+        }
     }
 }

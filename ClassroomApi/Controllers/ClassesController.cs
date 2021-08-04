@@ -68,5 +68,12 @@ namespace ClassroomApi.Controllers
                 return NoContent();
             }
         }
+
+        [HttpGet("Names")]
+        public ActionResult<List<string>> GetAllClassNames()
+        {
+            List<string> classNames = _dbService.GetAllClassNames();
+            return Ok(classNames);
+        }
     }
 }

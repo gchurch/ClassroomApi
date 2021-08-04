@@ -18,5 +18,6 @@ namespace ClassroomApi.Interfaces
         Student GetStudentById(int studentId);
         void AddStudent(Student student);
         void AddTeacherClass(TeacherClass teacherClass);
+        List<string> GetAllClassNames();
     }
 }
