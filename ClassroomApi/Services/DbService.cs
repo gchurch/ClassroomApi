@@ -17,8 +17,6 @@ namespace ClassroomApi.Services
         public DbService(ClassroomContext context)
         {
             _context = context;
-            ClearDatabase();
-            SeedDatabase();
         }
 
         private void ClearDatabase()
@@ -64,6 +62,16 @@ namespace ClassroomApi.Services
             var query = from teacher in _context.Teachers select teacher;
             var teachers = query.ToList();
             return teachers;
+        }
+
+        public Teacher GetTeacherById(int teacherId)
+        {
+            var query = from teacher 
+                        in _context.Teachers 
+                        where teacher.TeacherId == teacherId 
+                        select teacher;
+            var Teacher = query.AsNoTracking().FirstOrDefault();
+            return Teacher;
         }
     }
 }

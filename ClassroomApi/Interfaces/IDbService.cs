@@ -9,5 +9,6 @@ namespace ClassroomApi.Interfaces
     public interface IDbService
     {
         List<Teacher> GetAllTeachers();
+        Teacher GetTeacherById(int teacherId);
     }
 }
