@@ -9,24 +9,10 @@ using System.Threading.Tasks;
 namespace IntegrationTests
 {
     [TestClass]
-    public class ApiTests
+    public class TeachersApiTests
     {
 
         public CustomWebApplicationFactory _factory = new CustomWebApplicationFactory();
-
-        public StringContent SerializeObject(object objectToSerialize)
-        {
-            string productString = JsonConvert.SerializeObject(objectToSerialize);
-            StringContent stringContent = new StringContent(productString, Encoding.UTF8, "application/json");
-            return stringContent;
-        }
-
-        public async Task<T> DeserializeResponse<T>(HttpResponseMessage response)
-        {
-            string responseString = await response.Content.ReadAsStringAsync();
-            T result = JsonConvert.DeserializeObject<T>(responseString);
-            return result;
-        }
 
         [TestMethod]
         public async Task GetRequestOfTeachersEndpoint_ShouldReturnOkStatusCode()
@@ -53,7 +39,7 @@ namespace IntegrationTests
             HttpResponseMessage response = await client.GetAsync(url);
 
             // Assert
-            Teacher[] teachers = await DeserializeResponse<Teacher[]>(response);
+            Teacher[] teachers = await Helper.DeserializeResponse<Teacher[]>(response);
             Assert.AreEqual(3, teachers.Length);
             Assert.AreEqual("David", teachers[0].FirstName);
             Assert.AreEqual("Michelle", teachers[1].FirstName);
@@ -72,7 +58,7 @@ namespace IntegrationTests
             HttpResponseMessage response = await client.GetAsync(url);
 
             // Assert
-            Teacher teacher = await DeserializeResponse<Teacher>(response);
+            Teacher teacher = await Helper.DeserializeResponse<Teacher>(response);
             Assert.AreEqual("David", teacher.FirstName);
             Assert.AreEqual("Allen", teacher.LastName);
             Assert.AreEqual(30, teacher.Age);
@@ -90,13 +76,13 @@ namespace IntegrationTests
                 FirstName = "Peter"
             };
             string url = "/api/teachers/";
-            StringContent serializedTeacher = SerializeObject(teacherToPost);
+            StringContent serializedTeacher = Helper.SerializeObject(teacherToPost);
 
             // Act
             HttpResponseMessage response = await client.PostAsync(url, serializedTeacher);
 
             // Assert
-            Teacher teacherResponse = await DeserializeResponse<Teacher>(response);
+            Teacher teacherResponse = await Helper.DeserializeResponse<Teacher>(response);
             Assert.AreEqual(teacherToPost.FirstName, teacherResponse.FirstName);
             int expectedIdOfNewTeacher = 4;
             Assert.AreEqual(expectedIdOfNewTeacher, teacherResponse.TeacherId);
