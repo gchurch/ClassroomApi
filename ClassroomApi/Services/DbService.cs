@@ -66,5 +66,29 @@ namespace ClassroomApi.Services
             _context.Classes.Add(@class);
             _context.SaveChanges();
         }
+
+        public List<Student> GetAllStudents()
+        {
+            var query = from student in _context.Students select student;
+            var students = query.ToList();
+            return students;
+        }
+
+        public Student GetStudentById(int classId)
+        {
+            var query = from student
+                        in _context.Students
+                        where student.StudentId == classId
+                        select student;
+            Student selectedStudent = query.AsNoTracking().FirstOrDefault();
+            return selectedStudent;
+        }
+
+        public void AddStudent(Student student)
+        {
+            student.StudentId = 0;
+            _context.Students.Add(student);
+            _context.SaveChanges();
+        }
     }
 }
