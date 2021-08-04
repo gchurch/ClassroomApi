@@ -21,5 +21,6 @@ namespace ClassroomApi.Interfaces
         List<string> GetAllClassNames();
         int GetClassIdFromClassName(string className);
         List<string> GetStudentNamesFromClass(int classId);
+        List<TeacherClass> GetAllTeacherClasses();
     }
 }

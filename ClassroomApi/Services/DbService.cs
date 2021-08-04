@@ -121,6 +121,7 @@ namespace ClassroomApi.Services
                 throw new Exception("class or teacher doesn't exist.");
             }
             _context.TeacherClasses.Add(teacherClass);
+            _context.SaveChanges();
         }
 
         public List<string> GetAllClassNames()
@@ -152,7 +153,7 @@ namespace ClassroomApi.Services
                         in _context.Classes
                         where @class.ClassId == classId
                         select @class.Students;
-            List<Student> students = query.Single();
+            List<Student> students = query.AsNoTracking().Single();
             var studentNames = new List<string>();
             foreach(Student student in students)
             {
@@ -160,5 +161,15 @@ namespace ClassroomApi.Services
             }
             return studentNames;
         }
+
+        public List<TeacherClass> GetAllTeacherClasses()
+        {
+            var query = from teacherClass
+                        in _context.TeacherClasses
+                        select teacherClass;
+            List<TeacherClass> teacherClasses = query.AsNoTracking().ToList();
+            return teacherClasses;
+        }
+
     }
 }

@@ -50,7 +50,7 @@ namespace ClassroomApi.Controllers
         }
 
         [HttpPost("{classId}/Teachers/{teacherId}")]
-        public ActionResult AddTeacherToClass(int classId, int teacherId)
+        public ActionResult<TeacherClass> AddTeacherToClass(int classId, int teacherId)
         {
             var teacherClass = new TeacherClass()
             {
@@ -67,6 +67,13 @@ namespace ClassroomApi.Controllers
                 Console.WriteLine(e.Message);
                 return NoContent();
             }
+        }
+
+        [HttpGet("TeacherClasses")]
+        public ActionResult<List<TeacherClass>> GetAllTeacherClasses()
+        {
+            List<TeacherClass> teacherClasses = _dbService.GetAllTeacherClasses();
+            return Ok(teacherClasses);
         }
 
         [HttpGet("Names")]
