@@ -1,3 +1,5 @@
+using ClassroomApi.Interfaces;
+using ClassroomApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,6 +39,8 @@ namespace ClassroomApi
             services.AddDbContext<ClassroomContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddTransient<IDbService, DbService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
