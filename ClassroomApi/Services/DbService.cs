@@ -19,44 +19,6 @@ namespace ClassroomApi.Services
             _context = context;
         }
 
-        private void ClearDatabase()
-        {
-            var query = from teacher in _context.Teachers select teacher;
-            var teachers = query.ToList();
-            _context.Teachers.RemoveRange(teachers);
-            _context.SaveChanges();
-        }
-
-        private void SeedDatabase()
-        {
-            var teachers = new List<Teacher>()
-            {
-                new Teacher()
-                {
-                    FirstName = "David",
-                    LastName = "Allen",
-                    Age = 30,
-                    Subject = "Maths"
-                },
-                new Teacher()
-                {
-                    FirstName = "Michelle",
-                    LastName = "Jones",
-                    Age = 26,
-                    Subject = "English"
-                },
-                new Teacher()
-                {
-                    FirstName = "John",
-                    LastName = "Smith",
-                    Age = 35,
-                    Subject = "Geography"
-                }
-            };
-            _context.Teachers.AddRange(teachers);
-            _context.SaveChanges();
-        }
-
         public List<Teacher> GetAllTeachers()
         {
             var query = from teacher in _context.Teachers select teacher;
@@ -78,6 +40,30 @@ namespace ClassroomApi.Services
         {
             teacher.TeacherId = 0;
             _context.Teachers.Add(teacher);
+            _context.SaveChanges();
+        }
+
+        public List<Class> GetAllClasses()
+        {
+            var query = from @class in _context.Classes select @class;
+            var classes = query.ToList();
+            return classes;
+        }
+
+        public Class GetClassById(int classId)
+        {
+            var query = from @class
+                        in _context.Classes
+                        where @class.ClassId == classId
+                        select @class;
+            Class selectedClass = query.AsNoTracking().FirstOrDefault();
+            return selectedClass;
+        }
+
+        public void AddClass(Class @class)
+        {
+            @class.ClassId = 0;
+            _context.Classes.Add(@class);
             _context.SaveChanges();
         }
     }
