@@ -19,6 +19,6 @@ Endpoint 4: Add a teacher to a classroom
 
 Send a post request of the form api/Classes/{classId}/Teachers/{teacherId}. If the classId or teacherId do not exist then the response will contain a 204 No Content status code.
 
-endpoint 5: Get all classroom names
+Endpoint 5: Get all classroom names
 
 Send a the get request to api/Classes/Names.
