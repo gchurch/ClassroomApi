@@ -53,6 +53,7 @@ namespace ClasssroomApi.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return NoContent();
             }
         }

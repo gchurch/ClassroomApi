@@ -48,5 +48,25 @@ namespace ClassroomApi.Controllers
             _dbService.AddClass(@class);
             return CreatedAtAction(nameof(GetClassById), new { ClassId = @class.ClassId }, @class);
         }
+
+        [HttpPost("{classId}/Teachers/{teacherId}")]
+        public ActionResult AddTeacherToClass(int classId, int teacherId)
+        {
+            var teacherClass = new TeacherClass()
+            {
+                ClassId = classId,
+                TeacherId = teacherId
+            };
+            try
+            {
+                _dbService.AddTeacherClass(teacherClass);
+                return Ok(teacherClass);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return NoContent();
+            }
+        }
     }
 }

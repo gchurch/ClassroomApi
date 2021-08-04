@@ -104,5 +104,23 @@ namespace ClassroomApi.Services
             _context.Students.Add(student);
             _context.SaveChanges();
         }
+
+        private bool DoesTeacherExist(int teacherId)
+        {
+            var query = from teacher
+                        in _context.Teachers
+                        where teacher.TeacherId == teacherId
+                        select teacher;
+            return query.Any();
+        }
+
+        public void AddTeacherClass(TeacherClass teacherClass)
+        {
+            if(DoesClassExist(teacherClass.ClassId) == false || DoesTeacherExist(teacherClass.TeacherId) == false)
+            {
+                throw new Exception("class or teacher doesn't exist.");
+            }
+            _context.TeacherClasses.Add(teacherClass);
+        }
     }
 }
