@@ -21,4 +21,8 @@ Send a post request of the form api/Classes/{classId}/Teachers/{teacherId}. If t
 
 Endpoint 5: Get all classroom names
 
-Send a the get request to api/Classes/Names.
+Send a get request to api/Classes/Names.
+
+Endpoint 6: Get names of all students in a specific classroom
+
+Send a get request of the form api/Classes/{className}/StudentNames
