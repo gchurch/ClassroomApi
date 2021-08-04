@@ -14,3 +14,11 @@ Send a post request to /api/Students with the student information in the body of
 Endpoint 3: Create a classroom
 
 Send a post request to /api/Classes with the class information in the body of the request.
+
+Endpoint 4: Add a teacher to a classroom
+
+Send a post request of the form api/Classes/{classId}/Teachers/{teacherId}. If the classId or teacherId do not exist then the response will contain a 204 No Content status code.
+
+endpoint 5: Get all classroom names
+
+Send a the get request to api/Classes/Names.
