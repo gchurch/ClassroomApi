@@ -41,5 +41,12 @@ namespace ClassroomApi.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPost]
+        public ActionResult<Teacher> CreateTeacher([FromBody] Teacher teacher)
+        {
+            _dbService.AddTeacher(teacher);
+            return CreatedAtAction(nameof(GetTeacherById), new { teacherId = teacher.TeacherId }, teacher);
+        }
     }
 }

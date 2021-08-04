@@ -73,5 +73,12 @@ namespace ClassroomApi.Services
             var Teacher = query.AsNoTracking().FirstOrDefault();
             return Teacher;
         }
+
+        public void AddTeacher(Teacher teacher)
+        {
+            teacher.TeacherId = 0;
+            _context.Teachers.Add(teacher);
+            _context.SaveChanges();
+        }
     }
 }
