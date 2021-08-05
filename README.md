@@ -32,6 +32,13 @@ Example request body:
 
 Send a post request to /api/Classes with the class information in the body of the request. The response should contain a 201 Created status code and the body should contain the created classroom resource.
 
+Example request body:
+{
+    "className": "English",
+    "school": "Oak High School",
+    "grade": "A"
+}
+
 ### Endpoint 4: Add a teacher to a classroom
 
 Send a post request of the form api/Classes/{classId}/Teachers/{teacherId}. If the classId or teacherId do not exist then the response will contain a 204 No Content status code. If the request was successful then the response body should contain the created TeacherClass resource.
