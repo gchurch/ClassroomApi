@@ -43,6 +43,8 @@ Example request body:
 
 Send a post request of the form api/Classes/{classId}/Teachers/{teacherId}. If the classId or teacherId do not exist then the response will contain a 204 No Content status code. If the request was successful then the response body should contain the created TeacherClass resource.
 
+Example URL: /api/Classes/3/Teachers/2
+
 ### Endpoint 5: Get all classroom names
 
 Send a get request to api/Classes/Names. The response body should contain a list of all classroom names.
@@ -50,3 +52,5 @@ Send a get request to api/Classes/Names. The response body should contain a list
 ### Endpoint 6: Get names of all students in a specific classroom
 
 Send a get request of the form api/Classes/{className}/StudentNames. The response body will contain the name of all students in that class.
+
+Example URL: /api/Classes/Maths/StudentNames
