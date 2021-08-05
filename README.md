@@ -20,6 +20,14 @@ Example request body:
 
 Send a post request to /api/Students with the student information in the body of the request. If the student is succesfully created then the response will contain a 201 Created status code and the body should contain the created student resource. If the supplied ClassId doesn't exist then the response will contain a 204 No Content status code.
 
+Example request body:
+{
+    "firstName": "David",
+    "lastName": "Jones",
+    "age": 12,
+    "classId": 1
+}
+
 ### Endpoint 3: Create a classroom
 
 Send a post request to /api/Classes with the class information in the body of the request. The response should contain a 201 Created status code and the body should contain the created classroom resource.
