@@ -8,6 +8,14 @@ I didn't implement DTOs, so in swagger the examples contain the EF Core navigati
 
 Send a post request to /api/Teachers with the teacher information in the body of the request. The response should contain a 201 Created status code and the body should contain the created teacher resource.
 
+Example request body: 
+{
+    "firstName": "John",
+    "lastName": "Smith",
+    "age": 35,
+    "subject": "Maths"
+}
+
 ### Endopint 2: Create a student
 
 Send a post request to /api/Students with the student information in the body of the request. If the student is succesfully created then the response will contain a 201 Created status code and the body should contain the created student resource. If the supplied ClassId doesn't exist then the response will contain a 204 No Content status code.
