@@ -3,14 +3,16 @@ using ClassroomApi;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClassroomApi.Migrations
 {
     [DbContext(typeof(ClassroomContext))]
-    partial class ClassroomContextModelSnapshot : ModelSnapshot
+    [Migration("20210811144453_AddedTeacherClassesNavigationProptyToClass")]
+    partial class AddedTeacherClassesNavigationProptyToClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,7 +133,7 @@ namespace ClassroomApi.Migrations
                         .IsRequired();
 
                     b.HasOne("ClassroomApi.Entities.Teacher", "Teacher")
-                        .WithMany("TeacherClasses")
+                        .WithMany()
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -145,11 +147,6 @@ namespace ClassroomApi.Migrations
                 {
                     b.Navigation("Students");
 
-                    b.Navigation("TeacherClasses");
-                });
-
-            modelBuilder.Entity("ClassroomApi.Entities.Teacher", b =>
-                {
                     b.Navigation("TeacherClasses");
                 });
 #pragma warning restore 612, 618

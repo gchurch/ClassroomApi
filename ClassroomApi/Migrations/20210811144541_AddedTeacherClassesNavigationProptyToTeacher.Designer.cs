@@ -3,14 +3,16 @@ using ClassroomApi;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClassroomApi.Migrations
 {
     [DbContext(typeof(ClassroomContext))]
-    partial class ClassroomContextModelSnapshot : ModelSnapshot
+    [Migration("20210811144541_AddedTeacherClassesNavigationProptyToTeacher")]
+    partial class AddedTeacherClassesNavigationProptyToTeacher
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
