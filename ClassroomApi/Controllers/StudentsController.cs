@@ -66,5 +66,25 @@ namespace ClasssroomApi.Controllers
                 return NoContent();
             }
         }
+
+        [HttpGet("{studentId}/Teachers")]
+        public ActionResult<List<TeacherDto>> GetAllTeachersOfAStudent(int studentId)
+        {
+            try
+            {
+                List<Teacher> teachers = _dbService.GetAllTeachersOfAStudent(studentId);
+                var teacherDtos = new List<TeacherDto>();
+                foreach(Teacher teacher in teachers)
+                {
+                    teacherDtos.Add(teacher.ConvertToTeacherDto());
+                }
+                return Ok(teacherDtos);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return NotFound();
+            }
+        }
     }
 }

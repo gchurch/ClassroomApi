@@ -171,5 +171,38 @@ namespace ClassroomApi.Services
             return teacherClasses;
         }
 
+        private bool DoesStudentExist(int studentId)
+        {
+            var query = from student
+                        in _context.Students
+                        where student.StudentId == studentId
+                        select student;
+            return query.Any();
+        }
+
+        public List<Teacher> GetAllTeachersOfAStudent(int studentId)
+        {
+            if(DoesStudentExist(studentId) == false)
+            {
+                throw new Exception("Student of given ID does not exist.");
+            }
+            var query = from student
+                        in _context.Students
+                        where student.StudentId == studentId
+                        select student;
+            Student studentResult = query
+                .AsNoTracking()
+                .Include(student => student.Class)
+                .ThenInclude(@class => @class.TeacherClasses)
+                .ThenInclude(teacherClasses => teacherClasses.Teacher)
+                .FirstOrDefault();
+            var teachers = new List<Teacher>();
+            foreach(TeacherClass teacherClass in studentResult.Class.TeacherClasses)
+            {
+                teachers.Add(teacherClass.Teacher);
+            }
+            return teachers;
+        }
+
     }
 }
