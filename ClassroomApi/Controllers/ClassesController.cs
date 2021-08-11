@@ -35,13 +35,14 @@ namespace ClassroomApi.Controllers
         }
 
         [HttpGet("{classId}")]
-        public ActionResult<Class> GetClassById(int classId)
+        public ActionResult<ClassDto> GetClassById(int classId)
         {
 
             Class @class = _dbService.GetClassById(classId);
             if (@class != null)
             {
-                return Ok(@class);
+                ClassDto classDto = @class.ConvertToDto();
+                return Ok(classDto);
             }
             else
             {
@@ -50,10 +51,11 @@ namespace ClassroomApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Class> CreateClass([FromBody] Class @class)
+        public ActionResult<ClassDto> CreateClass([FromBody] ClassDto classDto)
         {
+            Class @class = classDto.ConvertToClass();
             _dbService.AddClass(@class);
-            return CreatedAtAction(nameof(GetClassById), new { ClassId = @class.ClassId }, @class);
+            return CreatedAtAction(nameof(GetClassById), new { ClassId = @class.ClassId }, @class.ConvertToDto());
         }
 
         [HttpPost("{classId}/Teachers/{teacherId}")]
