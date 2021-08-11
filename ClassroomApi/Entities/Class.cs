@@ -1,7 +1,5 @@
-﻿using System;
+﻿using ClassroomApi.DTOs;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ClassroomApi.Entities
 {
@@ -13,5 +11,16 @@ namespace ClassroomApi.Entities
         public string Grade { get; set; }
 
         public List<Student> Students { get; set; }
+
+        public ClassDto ConvertToDto()
+        {
+            return new ClassDto()
+            {
+                ClassId = ClassId,
+                ClassName = ClassName,
+                School = School,
+                Grade = Grade
+            };
+        }
     }
 }

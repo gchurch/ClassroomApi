@@ -1,4 +1,5 @@
-﻿using ClassroomApi.Entities;
+﻿using ClassroomApi.DTOs;
+using ClassroomApi.Entities;
 using ClassroomApi.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,15 @@ namespace ClassroomApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Class>> GetAllClasses()
+        public ActionResult<List<ClassDto>> GetAllClasses()
         {
-            return Ok(_dbService.GetAllClasses());
+            List<Class> classes = _dbService.GetAllClasses();
+            var classDtos = new List<ClassDto>();
+            foreach(Class @class in classes)
+            {
+                classDtos.Add(@class.ConvertToDto());
+            }
+            return Ok(classDtos);
         }
 
         [HttpGet("{classId}")]
