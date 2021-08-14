@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegrationTests.Helper;
 
 namespace IntegrationTests
 {
@@ -40,7 +41,7 @@ namespace IntegrationTests
             HttpResponseMessage response = await client.GetAsync(url);
 
             // Assert
-            StudentDto[] students = await Helper.DeserializeResponse<StudentDto[]>(response);
+            StudentDto[] students = await DeserializeResponse<StudentDto[]>(response);
             Assert.AreEqual(2, students.Length);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
@@ -57,7 +58,7 @@ namespace IntegrationTests
             HttpResponseMessage response = await client.GetAsync(url);
 
             // Assert
-            StudentDto student = await Helper.DeserializeResponse<StudentDto>(response);
+            StudentDto student = await DeserializeResponse<StudentDto>(response);
             Assert.AreEqual("Harry", student.FirstName);
             Assert.AreEqual("Davidson", student.LastName);
             Assert.AreEqual(14, student.Age);
@@ -77,13 +78,13 @@ namespace IntegrationTests
                 ClassId = 1
             };
             string url = "/api/students/";
-            StringContent serializedStudent = Helper.SerializeObject(studentToPost);
+            StringContent serializedStudent = SerializeObject(studentToPost);
 
             // Act
             HttpResponseMessage response = await client.PostAsync(url, serializedStudent);
 
             // Assert
-            StudentDto studentResponse = await Helper.DeserializeResponse<StudentDto>(response);
+            StudentDto studentResponse = await DeserializeResponse<StudentDto>(response);
             Assert.AreEqual(studentToPost.FirstName, studentResponse.FirstName);
             int expectedIdOfNewStudent = 3;
             Assert.AreEqual(expectedIdOfNewStudent, studentResponse.StudentId);
@@ -102,7 +103,7 @@ namespace IntegrationTests
                 ClassId = 123
             };
             string url = "/api/students/";
-            StringContent serializedStudent = Helper.SerializeObject(studentToPost);
+            StringContent serializedStudent = SerializeObject(studentToPost);
 
             // Act
             HttpResponseMessage response = await client.PostAsync(url, serializedStudent);

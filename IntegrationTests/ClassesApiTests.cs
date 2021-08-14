@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegrationTests.Helper;
 
 namespace IntegrationTests
 {
@@ -39,7 +40,7 @@ namespace IntegrationTests
             HttpResponseMessage response = await client.GetAsync(url);
 
             // Assert
-            Class[] classes = await Helper.DeserializeResponse<Class[]>(response);
+            Class[] classes = await DeserializeResponse<Class[]>(response);
             Assert.AreEqual(1, classes.Length);
             Assert.AreEqual("Maths", classes[0].ClassName);
         }
@@ -56,7 +57,7 @@ namespace IntegrationTests
             HttpResponseMessage response = await client.GetAsync(url);
 
             // Assert
-            Class @class = await Helper.DeserializeResponse<Class>(response);
+            Class @class = await DeserializeResponse<Class>(response);
             Assert.AreEqual("Maths", @class.ClassName);
             Assert.AreEqual("Wilson's", @class.School);
             Assert.AreEqual("A", @class.Grade);
@@ -73,13 +74,13 @@ namespace IntegrationTests
                 ClassName = "English"
             };
             string url = "/api/classes/";
-            StringContent serializedClasse = Helper.SerializeObject(classToPost);
+            StringContent serializedClasse = SerializeObject(classToPost);
 
             // Act
             HttpResponseMessage response = await client.PostAsync(url, serializedClasse);
 
             // Assert
-            Class classResponse = await Helper.DeserializeResponse<Class>(response);
+            Class classResponse = await DeserializeResponse<Class>(response);
             Assert.AreEqual(classToPost.ClassName, classResponse.ClassName);
             int expectedIdOfNewClass = 2;
             Assert.AreEqual(expectedIdOfNewClass, classResponse.ClassId);
