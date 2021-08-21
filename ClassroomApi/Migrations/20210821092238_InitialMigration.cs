@@ -2,7 +2,7 @@
 
 namespace ClassroomApi.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,20 +19,6 @@ namespace ClassroomApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Classes", x => x.ClassId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TeacherClasses",
-                columns: table => new
-                {
-                    TeacherClassId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TeacherId = table.Column<int>(type: "int", nullable: false),
-                    ClassId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TeacherClasses", x => x.TeacherClassId);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,10 +59,46 @@ namespace ClassroomApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TeacherClasses",
+                columns: table => new
+                {
+                    TeacherClassId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TeacherId = table.Column<int>(type: "int", nullable: false),
+                    ClassId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherClasses", x => x.TeacherClassId);
+                    table.ForeignKey(
+                        name: "FK_TeacherClasses_Classes_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Classes",
+                        principalColumn: "ClassId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TeacherClasses_Teachers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "Teachers",
+                        principalColumn: "TeacherId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Students_ClassId",
                 table: "Students",
                 column: "ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherClasses_ClassId",
+                table: "TeacherClasses",
+                column: "ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherClasses_TeacherId",
+                table: "TeacherClasses",
+                column: "TeacherId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -88,10 +110,10 @@ namespace ClassroomApi.Migrations
                 name: "TeacherClasses");
 
             migrationBuilder.DropTable(
-                name: "Teachers");
+                name: "Classes");
 
             migrationBuilder.DropTable(
-                name: "Classes");
+                name: "Teachers");
         }
     }
 }

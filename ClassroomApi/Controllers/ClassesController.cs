@@ -1,4 +1,5 @@
-﻿using ClassroomApi.Entities;
+﻿using ClassroomApi.DTOs;
+using ClassroomApi.Entities;
 using ClassroomApi.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,19 +23,26 @@ namespace ClassroomApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Class>> GetAllClasses()
+        public ActionResult<List<ClassDto>> GetAllClasses()
         {
-            return Ok(_dbService.GetAllClasses());
+            List<Class> classes = _dbService.GetAllClasses();
+            var classDtos = new List<ClassDto>();
+            foreach(Class @class in classes)
+            {
+                classDtos.Add(@class.ConvertToDto());
+            }
+            return Ok(classDtos);
         }
 
         [HttpGet("{classId}")]
-        public ActionResult<Class> GetClassById(int classId)
+        public ActionResult<ClassDto> GetClassById(int classId)
         {
 
             Class @class = _dbService.GetClassById(classId);
             if (@class != null)
             {
-                return Ok(@class);
+                ClassDto classDto = @class.ConvertToDto();
+                return Ok(classDto);
             }
             else
             {
@@ -43,14 +51,15 @@ namespace ClassroomApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Class> CreateClass([FromBody] Class @class)
+        public ActionResult<ClassDto> CreateClass([FromBody] ClassDto classDto)
         {
+            Class @class = classDto.ConvertToClass();
             _dbService.AddClass(@class);
-            return CreatedAtAction(nameof(GetClassById), new { ClassId = @class.ClassId }, @class);
+            return CreatedAtAction(nameof(GetClassById), new { ClassId = @class.ClassId }, @class.ConvertToDto());
         }
 
         [HttpPost("{classId}/Teachers/{teacherId}")]
-        public ActionResult<TeacherClass> AddTeacherToClass(int classId, int teacherId)
+        public ActionResult<TeacherClassDto> AddTeacherToClass(int classId, int teacherId)
         {
             var teacherClass = new TeacherClass()
             {
@@ -60,7 +69,7 @@ namespace ClassroomApi.Controllers
             try
             {
                 _dbService.AddTeacherClass(teacherClass);
-                return Ok(teacherClass);
+                return Ok(teacherClass.ConvertToTeacherClassDto());
             }
             catch (Exception e)
             {
@@ -70,10 +79,15 @@ namespace ClassroomApi.Controllers
         }
 
         [HttpGet("TeacherClasses")]
-        public ActionResult<List<TeacherClass>> GetAllTeacherClasses()
+        public ActionResult<List<TeacherClassDto>> GetAllTeacherClasses()
         {
             List<TeacherClass> teacherClasses = _dbService.GetAllTeacherClasses();
-            return Ok(teacherClasses);
+            var teacherClassDtos = new List<TeacherClassDto>();
+            foreach (TeacherClass teacherClass in teacherClasses)
+            {
+                teacherClassDtos.Add(teacherClass.ConvertToTeacherClassDto());
+            }
+            return Ok(teacherClassDtos);
         }
 
         [HttpGet("Names")]

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegrationTests.Helper;
 
 namespace IntegrationTests
 {
@@ -39,11 +40,10 @@ namespace IntegrationTests
             HttpResponseMessage response = await client.GetAsync(url);
 
             // Assert
-            Teacher[] teachers = await Helper.DeserializeResponse<Teacher[]>(response);
-            Assert.AreEqual(3, teachers.Length);
+            Teacher[] teachers = await DeserializeResponse<Teacher[]>(response);
+            Assert.AreEqual(2, teachers.Length);
             Assert.AreEqual("David", teachers[0].FirstName);
             Assert.AreEqual("Michelle", teachers[1].FirstName);
-            Assert.AreEqual("John", teachers[2].FirstName);
         }
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace IntegrationTests
             HttpResponseMessage response = await client.GetAsync(url);
 
             // Assert
-            Teacher teacher = await Helper.DeserializeResponse<Teacher>(response);
+            Teacher teacher = await DeserializeResponse<Teacher>(response);
             Assert.AreEqual("David", teacher.FirstName);
             Assert.AreEqual("Allen", teacher.LastName);
             Assert.AreEqual(30, teacher.Age);
@@ -76,15 +76,15 @@ namespace IntegrationTests
                 FirstName = "Peter"
             };
             string url = "/api/teachers/";
-            StringContent serializedTeacher = Helper.SerializeObject(teacherToPost);
+            StringContent serializedTeacher = SerializeObject(teacherToPost);
 
             // Act
             HttpResponseMessage response = await client.PostAsync(url, serializedTeacher);
 
             // Assert
-            Teacher teacherResponse = await Helper.DeserializeResponse<Teacher>(response);
+            Teacher teacherResponse = await DeserializeResponse<Teacher>(response);
             Assert.AreEqual(teacherToPost.FirstName, teacherResponse.FirstName);
-            int expectedIdOfNewTeacher = 4;
+            int expectedIdOfNewTeacher = 3;
             Assert.AreEqual(expectedIdOfNewTeacher, teacherResponse.TeacherId);
         }
     }

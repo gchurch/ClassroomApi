@@ -104,6 +104,10 @@ namespace ClassroomApi.Migrations
 
                     b.HasKey("TeacherClassId");
 
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("TeacherId");
+
                     b.ToTable("TeacherClasses");
                 });
 
@@ -118,9 +122,35 @@ namespace ClassroomApi.Migrations
                     b.Navigation("Class");
                 });
 
+            modelBuilder.Entity("ClassroomApi.Entities.TeacherClass", b =>
+                {
+                    b.HasOne("ClassroomApi.Entities.Class", "Class")
+                        .WithMany("TeacherClasses")
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClassroomApi.Entities.Teacher", "Teacher")
+                        .WithMany("TeacherClasses")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("Teacher");
+                });
+
             modelBuilder.Entity("ClassroomApi.Entities.Class", b =>
                 {
                     b.Navigation("Students");
+
+                    b.Navigation("TeacherClasses");
+                });
+
+            modelBuilder.Entity("ClassroomApi.Entities.Teacher", b =>
+                {
+                    b.Navigation("TeacherClasses");
                 });
 #pragma warning restore 612, 618
         }

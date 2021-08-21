@@ -21,86 +21,87 @@ namespace ClassroomApi
 
         public static void SeedDB(ClassroomContext context)
         {
-            // Look for any products.
+            // Look for any teachers.
             if (context.Teachers.Any())
             {
                 return;     // DB has been seeded
             }
 
-            AddTeachers(context);
-            AddClasses(context);
-            AddStudents(context);
-        }
-
-        private static void AddTeachers(ClassroomContext context)
-        {
-            var teachers = new List<Teacher>()
-            {
-                new Teacher()
-                {
-                    FirstName = "David",
-                    LastName = "Allen",
-                    Age = 30,
-                    Subject = "Maths"
-                },
-                new Teacher()
-                {
-                    FirstName = "Michelle",
-                    LastName = "Jones",
-                    Age = 26,
-                    Subject = "English"
-                },
-                new Teacher()
-                {
-                    FirstName = "John",
-                    LastName = "Smith",
-                    Age = 35,
-                    Subject = "Geography"
-                }
-            };
-
-            context.Teachers.AddRange(teachers);
+            context.Teachers.AddRange(Teachers);
+            context.SaveChanges();
+            context.Classes.AddRange(Classes);
+            context.SaveChanges();
+            context.Students.AddRange(Students);
+            context.SaveChanges();
+            context.TeacherClasses.AddRange(TeacherClasses);
             context.SaveChanges();
         }
 
-        private static void AddClasses(ClassroomContext context)
+        public static readonly List<Teacher> Teachers = new List<Teacher>()
         {
-            var classes = new List<Class>()
+            new Teacher()
             {
-                new Class()
-                {
-                    ClassName = "Maths",
-                    School = "Wilson's",
-                    Grade = "A"
-                }
-            };
+                FirstName = "David",
+                LastName = "Allen",
+                Age = 30,
+                Subject = "Maths"
+            },
+            new Teacher()
+            {
+                FirstName = "Michelle",
+                LastName = "Jones",
+                Age = 26,
+                Subject = "English"
+            }
+        };
 
-            context.Classes.AddRange(classes);
-            context.SaveChanges();
-        }
-
-        private static void AddStudents(ClassroomContext context)
+        public static readonly List<Class> Classes = new List<Class>()
         {
-            var students = new List<Student>()
+            new Class()
             {
-                new Student()
-                {
-                    FirstName = "Harry",
-                    LastName = "Davidson",
-                    Age = 14,
-                    ClassId = 1
-                },
-                new Student()
-                {
-                    FirstName = "Kevin",
-                    LastName = "Mitchell",
-                    Age = 12,
-                    ClassId = 1
-                }
-            };
+                ClassName = "9GH",
+                School = "Wilson's",
+                Grade = "A"
+            }
+        };
 
-            context.Students.AddRange(students);
-            context.SaveChanges();
-        }
+        public static readonly List<Student> Students = new List<Student>()
+        {
+            new Student()
+            {
+                FirstName = "Harry",
+                LastName = "Davidson",
+                Age = 14,
+                ClassId = 1
+            },
+            new Student()
+            {
+                FirstName = "Kevin",
+                LastName = "Mitchell",
+                Age = 12,
+                ClassId = 1
+            },
+            new Student()
+            {
+                FirstName = "Emily",
+                LastName = "Baker",
+                Age = 13,
+                ClassId = 1
+            }
+        };
+
+        public static readonly List<TeacherClass> TeacherClasses = new List<TeacherClass>()
+        {
+            new TeacherClass()
+            {
+                ClassId = 1,
+                TeacherId = 1
+            },
+            new TeacherClass()
+            {
+                ClassId = 1,
+                TeacherId = 2
+            }
+        };
     }
 }

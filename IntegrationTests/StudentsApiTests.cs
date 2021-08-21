@@ -1,10 +1,12 @@
-﻿using ClassroomApi.Entities;
+﻿using ClassroomApi.DTOs;
+using ClassroomApi.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegrationTests.Helper;
 
 namespace IntegrationTests
 {
@@ -39,8 +41,8 @@ namespace IntegrationTests
             HttpResponseMessage response = await client.GetAsync(url);
 
             // Assert
-            Student[] students = await Helper.DeserializeResponse<Student[]>(response);
-            Assert.AreEqual(2, students.Length);
+            StudentDto[] students = await DeserializeResponse<StudentDto[]>(response);
+            Assert.AreEqual(3, students.Length);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -56,7 +58,8 @@ namespace IntegrationTests
             HttpResponseMessage response = await client.GetAsync(url);
 
             // Assert
-            Student student = await Helper.DeserializeResponse<Student>(response);
+            StudentDto student = await DeserializeResponse<StudentDto>(response);
+            Assert.AreEqual(1, student.StudentId);
             Assert.AreEqual("Harry", student.FirstName);
             Assert.AreEqual("Davidson", student.LastName);
             Assert.AreEqual(14, student.Age);
@@ -70,21 +73,21 @@ namespace IntegrationTests
             // Arrange
             HttpClient client = _factory.CreateClient();
 
-            var studentToPost = new Student()
+            var studentToPost = new StudentDto()
             {
                 FirstName = "Peter",
                 ClassId = 1
             };
             string url = "/api/students/";
-            StringContent serializedStudent = Helper.SerializeObject(studentToPost);
+            StringContent serializedStudent = SerializeObject(studentToPost);
 
             // Act
             HttpResponseMessage response = await client.PostAsync(url, serializedStudent);
 
             // Assert
-            Student studentResponse = await Helper.DeserializeResponse<Student>(response);
+            StudentDto studentResponse = await DeserializeResponse<StudentDto>(response);
             Assert.AreEqual(studentToPost.FirstName, studentResponse.FirstName);
-            int expectedIdOfNewStudent = 3;
+            int expectedIdOfNewStudent = 4;
             Assert.AreEqual(expectedIdOfNewStudent, studentResponse.StudentId);
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
@@ -95,19 +98,18 @@ namespace IntegrationTests
             // Arrange
             HttpClient client = _factory.CreateClient();
 
-            var studentToPost = new Student()
+            var studentToPost = new StudentDto()
             {
                 FirstName = "Peter",
                 ClassId = 123
             };
             string url = "/api/students/";
-            StringContent serializedStudent = Helper.SerializeObject(studentToPost);
+            StringContent serializedStudent = SerializeObject(studentToPost);
 
             // Act
             HttpResponseMessage response = await client.PostAsync(url, serializedStudent);
 
             // Assert
-            Student studentResponse = await Helper.DeserializeResponse<Student>(response);
             Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
         }
     }
