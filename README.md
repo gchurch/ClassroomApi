@@ -2,7 +2,7 @@
 
 # ClassroomApi
 
-I have implemented a classroom API using ASP.NET Core. The API includes endpoints for classes, teachers and students. I use EF Core in order to interact with an SQL Server database which stores the classroom data. I have created DTOs in order to hide the from the API users the navigation properties that are on the entity types.
+I have implemented a classroom API using ASP.NET Core. The API includes endpoints for classes, teachers and students. I use EF Core in order to interact with an SQL Server database which stores the classroom data. I have created DTOs in order to hide the from the API users the navigation properties that are on the entity types. I also created a couple of integration tests.
 
 ### Endpoint 1: Create a teacher
 
