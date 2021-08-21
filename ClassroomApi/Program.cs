@@ -26,6 +26,7 @@ namespace ClassroomApi
                     var context = services.GetRequiredService<ClassroomContext>();
                     context.Database.Migrate();
                     SeedData.Initialize(services);
+                    Console.WriteLine("HI THERE ALL");
                 }
                 catch (Exception ex)
                 {

@@ -41,10 +41,9 @@ namespace IntegrationTests
 
             // Assert
             Teacher[] teachers = await DeserializeResponse<Teacher[]>(response);
-            Assert.AreEqual(3, teachers.Length);
+            Assert.AreEqual(2, teachers.Length);
             Assert.AreEqual("David", teachers[0].FirstName);
             Assert.AreEqual("Michelle", teachers[1].FirstName);
-            Assert.AreEqual("John", teachers[2].FirstName);
         }
 
         [TestMethod]
@@ -85,7 +84,7 @@ namespace IntegrationTests
             // Assert
             Teacher teacherResponse = await DeserializeResponse<Teacher>(response);
             Assert.AreEqual(teacherToPost.FirstName, teacherResponse.FirstName);
-            int expectedIdOfNewTeacher = 4;
+            int expectedIdOfNewTeacher = 3;
             Assert.AreEqual(expectedIdOfNewTeacher, teacherResponse.TeacherId);
         }
     }

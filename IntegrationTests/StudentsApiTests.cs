@@ -42,7 +42,7 @@ namespace IntegrationTests
 
             // Assert
             StudentDto[] students = await DeserializeResponse<StudentDto[]>(response);
-            Assert.AreEqual(2, students.Length);
+            Assert.AreEqual(3, students.Length);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -86,7 +86,7 @@ namespace IntegrationTests
             // Assert
             StudentDto studentResponse = await DeserializeResponse<StudentDto>(response);
             Assert.AreEqual(studentToPost.FirstName, studentResponse.FirstName);
-            int expectedIdOfNewStudent = 3;
+            int expectedIdOfNewStudent = 4;
             Assert.AreEqual(expectedIdOfNewStudent, studentResponse.StudentId);
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }

@@ -21,7 +21,7 @@ namespace ClassroomApi
 
         public static void SeedDB(ClassroomContext context)
         {
-            // Look for any products.
+            // Look for any teachers.
             if (context.Teachers.Any())
             {
                 return;     // DB has been seeded
@@ -30,6 +30,7 @@ namespace ClassroomApi
             context.Teachers.AddRange(Teachers);
             context.Classes.AddRange(Classes);
             context.Students.AddRange(Students);
+            context.TeacherClasses.AddRange(TeacherClasses);
             context.SaveChanges();
         }
 
@@ -48,13 +49,6 @@ namespace ClassroomApi
                 LastName = "Jones",
                 Age = 26,
                 Subject = "English"
-            },
-            new Teacher()
-            {
-                FirstName = "John",
-                LastName = "Smith",
-                Age = 35,
-                Subject = "Geography"
             }
         };
 
@@ -62,7 +56,7 @@ namespace ClassroomApi
         {
             new Class()
             {
-                ClassName = "Maths",
+                ClassName = "9GH",
                 School = "Wilson's",
                 Grade = "A"
             }
@@ -83,6 +77,27 @@ namespace ClassroomApi
                 LastName = "Mitchell",
                 Age = 12,
                 ClassId = 1
+            },
+            new Student()
+            {
+                FirstName = "Emily",
+                LastName = "Baker",
+                Age = 13,
+                ClassId = 1
+            }
+        };
+
+        public static readonly List<TeacherClass> TeacherClasses = new List<TeacherClass>()
+        {
+            new TeacherClass()
+            {
+                ClassId = 1,
+                TeacherId = 1
+            },
+            new TeacherClass()
+            {
+                ClassId = 1,
+                TeacherId = 2
             }
         };
     }
