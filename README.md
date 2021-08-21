@@ -1,6 +1,8 @@
+[![.NET](https://github.com/gchurch/ClassroomApi/actions/workflows/dotnet.yml/badge.svg)](https://github.com/gchurch/ClassroomApi/actions/workflows/dotnet.yml)
+
 # ClassroomApi
 
-[![.NET](https://github.com/gchurch/ClassroomApi/actions/workflows/dotnet.yml/badge.svg)](https://github.com/gchurch/ClassroomApi/actions/workflows/dotnet.yml)
+I have implemented a classroom API using ASP.NET Core. I use EF Core to interact with an SQL Server database which stores the classroom data.
 
 ### Endpoint 1: Create a teacher
 
