@@ -28,8 +28,11 @@ namespace ClassroomApi
             }
 
             context.Teachers.AddRange(Teachers);
+            context.SaveChanges();
             context.Classes.AddRange(Classes);
+            context.SaveChanges();
             context.Students.AddRange(Students);
+            context.SaveChanges();
             context.TeacherClasses.AddRange(TeacherClasses);
             context.SaveChanges();
         }

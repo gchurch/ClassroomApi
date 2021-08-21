@@ -59,6 +59,7 @@ namespace IntegrationTests
 
             // Assert
             StudentDto student = await DeserializeResponse<StudentDto>(response);
+            Assert.AreEqual(1, student.StudentId);
             Assert.AreEqual("Harry", student.FirstName);
             Assert.AreEqual("Davidson", student.LastName);
             Assert.AreEqual(14, student.Age);

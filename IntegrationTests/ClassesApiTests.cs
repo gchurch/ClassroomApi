@@ -42,7 +42,6 @@ namespace IntegrationTests
             // Assert
             Class[] classes = await DeserializeResponse<Class[]>(response);
             Assert.AreEqual(1, classes.Length);
-            Assert.AreEqual("9GH", classes[0].ClassName);
         }
 
         [TestMethod]
@@ -58,6 +57,7 @@ namespace IntegrationTests
 
             // Assert
             Class @class = await DeserializeResponse<Class>(response);
+            Assert.AreEqual(1, @class.ClassId);
             Assert.AreEqual("9GH", @class.ClassName);
             Assert.AreEqual("Wilson's", @class.School);
             Assert.AreEqual("A", @class.Grade);

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClassroomApi.Migrations
 {
     [DbContext(typeof(ClassroomContext))]
-    [Migration("20210811144541_AddedTeacherClassesNavigationProptyToTeacher")]
-    partial class AddedTeacherClassesNavigationProptyToTeacher
+    [Migration("20210821092238_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
