@@ -59,7 +59,7 @@ namespace ClassroomApi.Controllers
         }
 
         [HttpPost("{classId}/Teachers/{teacherId}")]
-        public ActionResult<TeacherClass> AddTeacherToClass(int classId, int teacherId)
+        public ActionResult<TeacherClassDto> AddTeacherToClass(int classId, int teacherId)
         {
             var teacherClass = new TeacherClass()
             {
@@ -69,7 +69,7 @@ namespace ClassroomApi.Controllers
             try
             {
                 _dbService.AddTeacherClass(teacherClass);
-                return Ok(teacherClass);
+                return Ok(teacherClass.ConvertToTeacherClassDto());
             }
             catch (Exception e)
             {
@@ -79,10 +79,15 @@ namespace ClassroomApi.Controllers
         }
 
         [HttpGet("TeacherClasses")]
-        public ActionResult<List<TeacherClass>> GetAllTeacherClasses()
+        public ActionResult<List<TeacherClassDto>> GetAllTeacherClasses()
         {
             List<TeacherClass> teacherClasses = _dbService.GetAllTeacherClasses();
-            return Ok(teacherClasses);
+            var teacherClassDtos = new List<TeacherClassDto>();
+            foreach (TeacherClass teacherClass in teacherClasses)
+            {
+                teacherClassDtos.Add(teacherClass.ConvertToTeacherClassDto());
+            }
+            return Ok(teacherClassDtos);
         }
 
         [HttpGet("Names")]

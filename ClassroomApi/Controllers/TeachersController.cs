@@ -1,4 +1,5 @@
-﻿using ClassroomApi.Entities;
+﻿using ClassroomApi.DTOs;
+using ClassroomApi.Entities;
 using ClassroomApi.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,19 +23,25 @@ namespace ClassroomApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Teacher>> GetAllTeachers()
+        public ActionResult<List<TeacherDto>> GetAllTeachers()
         {
-            return Ok(_dbService.GetAllTeachers());
+            List<Teacher> teachers = _dbService.GetAllTeachers();
+            var teacherDtos = new List<TeacherDto>();
+            foreach(Teacher teacher in teachers)
+            {
+                teacherDtos.Add(teacher.ConvertToTeacherDto());
+            }
+            return Ok(teacherDtos);
         }
 
         [HttpGet("{teacherId}")]
-        public ActionResult<Teacher> GetTeacherById(int teacherId)
+        public ActionResult<TeacherDto> GetTeacherById(int teacherId)
         {
 
             Teacher teacher = _dbService.GetTeacherById(teacherId);
             if(teacher != null)
             {
-                return Ok(teacher);
+                return Ok(teacher.ConvertToTeacherDto());
             }
             else
             {
@@ -43,10 +50,11 @@ namespace ClassroomApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Teacher> CreateTeacher([FromBody] Teacher teacher)
+        public ActionResult<TeacherDto> CreateTeacher([FromBody] TeacherDto teacherDto)
         {
+            Teacher teacher = teacherDto.ConvertToTeacher();
             _dbService.AddTeacher(teacher);
-            return CreatedAtAction(nameof(GetTeacherById), new { teacherId = teacher.TeacherId }, teacher);
+            return CreatedAtAction(nameof(GetTeacherById), new { teacherId = teacher.TeacherId }, teacher.ConvertToTeacherDto());
         }
     }
 }

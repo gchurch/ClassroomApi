@@ -2,21 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ClassroomApi.DTOs;
+using ClassroomApi.Entities;
 
-namespace ClassroomApi.Entities
+namespace ClassroomApi.DTOs
 {
-    public class TeacherClass
+    public class TeacherClassDto
     {
         public int TeacherClassId { get; set; }
         public int TeacherId { get; set; }
-        public Teacher Teacher { get; set; }
         public int ClassId { get; set; }
-        public Class Class { get; set; }
 
-        public TeacherClassDto ConvertToTeacherClassDto()
+        public TeacherClass ConvertToTeacherClass()
         {
-            return new TeacherClassDto
+            return new TeacherClass()
             {
                 TeacherClassId = TeacherClassId,
                 TeacherId = TeacherId,
